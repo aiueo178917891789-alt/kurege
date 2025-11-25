@@ -2,22 +2,34 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8">
-  <title>俺のサイト完成！</title>
+  <title>AIUEO ONKURE - 復活のクレーンゲーム</title>
   <style>
-    body { 
-      font-family: system-ui, sans-serif; 
-      text-align: center; 
-      margin-top: 15vh; 
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      min-height: 100vh;
-    }
-    h1 { font-size: 3.5rem; }
-    p { font-size: 1.3rem; }
+    body { font-family: system-ui, sans-serif; text-align: center; background: #000; color: #0f0; padding: 50px; }
+    h1 { font-size: 3em; margin-bottom: 50px; }
+    button { font-size: 3em; padding: 30px 60px; margin: 20px; background: #0f0; color: black; border: none; border-radius: 20px; cursor: pointer; }
+    button:hover { background: #0f8; }
+    button:active { transform: scale(0.95); }
+    .status { margin-top: 50px; font-size: 1.5em; }
   </style>
 </head>
 <body>
-  <h1>やったー！サイト公開成功！</h1>
-  <p>ドメイン取得 → Cloudflare Pages → ここまで30分！<br>次は自分のドメインに繋ごう！</p>
+  <h1>AIUEO ONKURE</h1>
+  <button id="btn1">1番ボタン（FAST）</button>
+  <button id="btn2">2番ボタン（SECOND）</button>
+  <div class="status" id="status">接続中...</div>
+
+  <script>
+    const ws = new WebSocket("wss://crane-ws.yourname.workers.dev");  // ← ここも同じURL！
+
+    ws.onopen = () => document.getElementById("status").textContent = "接続完了！ボタン押してね！";
+    ws.onclose = () => document.getElementById("status").textContent = "切断されました...";
+
+    document.getElementById("btn1").onclick = () => {
+      ws.send(JSON.stringify({ command: "first" }));
+    };
+    document.getElementById("btn2").onclick = () => {
+      ws.send(JSON.stringify({ command: "second" }));
+    };
+  </script>
 </body>
 </html>
