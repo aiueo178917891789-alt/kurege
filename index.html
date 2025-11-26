@@ -1,23 +1,36 @@
-<script>
-  const ws = new WebSocket("wss://aiueoonkure.com/ws");
-  
-  const status = document.getElementById("status");
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>AIUEO ONKURE - 復活のクレーンゲーム</title>
+  <style>
+    body { font-family: system-ui, sans-serif; text-align: center; background: #000; color: #0f0; padding: 50px; }
+    h1 { font-size: 3em; margin-bottom: 50px; }
+    button { font-size: 3em; padding: 30px 60px; margin: 20px; background: #0f0; color: black; border: none; border-radius: 20px; cursor: pointer; }
+    button:hover { background: #0f8; }
+    button:active { transform: scale(0.95); }
+    .status { margin-top: 50px; font-size: 1.5em; }
+  </style>
+</head>
+<body>
+  <h1>AIUEO ONKURE</h1>
+  <button id="btn1">1番ボタン（FAST）</button>
+  <button id="btn2">2番ボタン（SECOND）</button>
+  <div class="status" id="status">接続中...</div>
 
-  ws.onopen = () => {
-    status.textContent = "接続完了！ボタン押してね！！";
-    status.style.color = "#0f0";
-  };
+  <script>
+    const ws = new WebSocket("wss://aiueoonkure.com/ws");
 
-  ws.onclose = () => status.textContent = "切断されました...";
-  ws.onerror = () => status.textContent = "接続エラー...再読み込みしてね";
+    ws.onopen = () => document.getElementById("status").textContent = "接続完了！ボタン押してね！";
+    ws.onclose = () => document.getElementById("status").textContent = "切断されました...";
+    ws.onerror = () => document.getElementById("status").textContent = "接続エラー...";
 
-  document.getElementById("btn1").onclick = () => {
-    ws.send(JSON.stringify({ command: "first" }));
-    status.textContent = "1番 FAST 送信！！";
-  };
-
-  document.getElementById("btn2").onclick = () => {
-    ws.send(JSON.stringify({ command: "second" }));
-    status.textContent = "2番 SECOND 送信！！";
-  };
-</script>
+    document.getElementById("btn1").onclick = () => {
+      ws.send(JSON.stringify({ command: "first" }));
+    };
+    document.getElementById("btn2").onclick = () => {
+      ws.send(JSON.stringify({ command: "second" }));
+    };
+  </script>
+</body>
+</html>
