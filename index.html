@@ -19,17 +19,25 @@
   <div class="status" id="status">接続中...</div>
 
   <script>
-    const ws = new WebSocket("wss://192.168.3.36");
+    const ws = new WebSocket("wss://aiueoonkure.com/ws");
+    const status = document.getElementById("status");
 
-    ws.onopen = () => document.getElementById("status").textContent = "接続完了！ボタン押してね！";
-    ws.onclose = () => document.getElementById("status").textContent = "切断されました...";
-    ws.onerror = () => document.getElementById("status").textContent = "接続エラー...";
+    ws.onopen = () => {
+      status.textContent = "接続完了！ボタン押してね！！";
+      status.style.color = "#0f0";
+    };
+
+    ws.onclose = () => status.textContent = "切断されました...";
+    ws.onerror = () => status.textContent = "接続エラー...再読み込みしてね";
 
     document.getElementById("btn1").onclick = () => {
       ws.send(JSON.stringify({ command: "first" }));
+      status.textContent = "1番 FAST 送信！！";
     };
+
     document.getElementById("btn2").onclick = () => {
       ws.send(JSON.stringify({ command: "second" }));
+      status.textContent = "2番 SECOND 送信！！";
     };
   </script>
 </body>
