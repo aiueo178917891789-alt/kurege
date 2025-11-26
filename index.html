@@ -19,7 +19,7 @@
   <div class="status" id="status">接続中...</div>
 
   <script>
-    const ws = new WebSocket("wss://aiueoonkure.com/ws");
+    const ws = new WebSocket("wss://192.168.3.36");
 
     ws.onopen = () => document.getElementById("status").textContent = "接続完了！ボタン押してね！";
     ws.onclose = () => document.getElementById("status").textContent = "切断されました...";
